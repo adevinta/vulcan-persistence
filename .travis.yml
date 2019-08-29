@@ -11,4 +11,4 @@ before_script:
 script:
   - ./script/test
 after_success:
-- bash <(curl -s https://codecov.io/bash) -f coverage/coverage.xml
+- bash <(curl -s https://codecov.io/bash)

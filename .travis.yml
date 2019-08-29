@@ -10,3 +10,5 @@ before_script:
   - psql -c "ALTER USER vulcan WITH SUPERUSER;" -U postgres
 script:
   - ./script/test
+after_success:
+- bash <(curl -s https://codecov.io/bash) -f coverage/coverage.xml

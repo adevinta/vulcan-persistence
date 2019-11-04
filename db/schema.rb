@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190327094812) do
+ActiveRecord::Schema.define(version: 20191031094812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,17 +52,18 @@ ActiveRecord::Schema.define(version: 20190327094812) do
   end
 
   create_table "checktypes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string   "name",                       null: false
+    t.string   "name",                         null: false
     t.text     "description"
-    t.integer  "timeout",     default: 600,  null: false
-    t.boolean  "enabled",     default: true, null: false
+    t.integer  "timeout",       default: 600,  null: false
+    t.boolean  "enabled",       default: true, null: false
     t.text     "options"
-    t.text     "image",                      null: false
+    t.text     "image",                        null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.text     "assets",      default: [],                array: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.text     "assets",        default: [],                array: true
     t.string   "queue_name"
+    t.text     "required_vars", default: [],                array: true
   end
 
   create_table "jobqueues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

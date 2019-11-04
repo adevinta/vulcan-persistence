@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191031094812) do
+ActiveRecord::Schema.define(version: 20191104094812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,20 +31,21 @@ ActiveRecord::Schema.define(version: 20191031094812) do
   create_table "checks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid     "agent_id"
     t.uuid     "checktype_id"
-    t.string   "status",       default: "CREATED", null: false
-    t.string   "target",                           null: false
+    t.string   "status",        default: "CREATED", null: false
+    t.string   "target",                            null: false
     t.text     "options"
     t.string   "webhook"
-    t.float    "score",        default: 0.0
-    t.float    "progress",     default: 0.0
+    t.float    "score",         default: 0.0
+    t.float    "progress",      default: 0.0
     t.text     "raw"
     t.text     "report"
     t.datetime "deleted_at"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.uuid     "scan_id"
     t.string   "queue_name"
     t.string   "tag"
+    t.text     "required_vars", default: [],                     array: true
     t.index ["agent_id"], name: "index_checks_on_agent_id", using: :btree
     t.index ["checktype_id"], name: "index_checks_on_checktype_id", using: :btree
     t.index ["scan_id"], name: "index_checks_on_scan_id", using: :btree

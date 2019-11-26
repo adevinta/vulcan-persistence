@@ -26,13 +26,13 @@ RUN apk add --update --no-cache \
         tzdata \
         postgresql-dev \
         sqlite-dev \
-        postgresql-client
+        postgresql-client \
+        gettext
 COPY --from=pre-builder /gems/ /gems/
 ENV BUNDLE_PATH="/gems" BUNDLE_JOBS=2 RAILS_ENV=${rails_env} BUNDLE_WITHOUT=${bundle_without}
 ENV RAILS_LOG_TO_STDOUT true
 
 WORKDIR /app
 COPY . .
-EXPOSE 3000
 
-CMD ./run.sh 
+CMD ["./run.sh"]

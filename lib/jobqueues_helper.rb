@@ -21,15 +21,16 @@ class JobQueuesHelper
     end
     # returning queue_name by check's checktype
     unless checktype.nil?
-      # return nessus specific queue if defined in configuration
-      if checktype.name.start_with? "vulcan-nessus"
-        return nessus_check_queue unless nessus_check_queue == "default"
-      end
       # default case is that checktype queue_name is nil
       # therefore we don't want to fail if queue_name is
       # not specified at checktype level
       unless checktype.queue_name.nil?
         return checktype.queue_name
+      end
+      # return nessus specific queue if defined in configuration
+      # and not defined by checktype
+      if checktype.name.start_with? "vulcan-nessus"
+        return nessus_check_queue unless nessus_check_queue == "default"
       end
     end
     # returning default queue_name

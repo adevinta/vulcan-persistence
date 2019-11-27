@@ -1,11 +1,6 @@
 class JobQueuesHelper
   def self.get_queue_name(jobqueue_id = nil, jobqueue_name = nil, checktype = nil)
     nessus_check_queue = Rails.application.config.nessus_check_queue
-    unless checktype.nil?
-      if checktype.name.start_with? "vulcan-nessus"
-        return nessus_check_queue unless nessus_check_queue == "default"
-      end
-    end
     # returning queue_name by jobqueue_name specified in check
     unless jobqueue_name.nil?
       jobqueue = Jobqueue.where(deleted_at: nil, name: jobqueue_name).first
@@ -26,6 +21,10 @@ class JobQueuesHelper
     end
     # returning queue_name by check's checktype
     unless checktype.nil?
+      # return nessus specific queue if defined in configuration
+      if checktype.name.start_with? "vulcan-nessus"
+        return nessus_check_queue unless nessus_check_queue == "default"
+      end
       # default case is that checktype queue_name is nil
       # therefore we don't want to fail if queue_name is
       # not specified at checktype level

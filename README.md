@@ -33,7 +33,7 @@ Those are the variables you have to use:
 |Variable|Description|Sample|
 |---|---|---|
 |POSTGRES_(HOST\|PORT\|USER\|PASSWORD\|DB)|Database access|
-|POSTGRES_SSLMODE|One of these (disable,allow,prefer,require,verify-ca,verify-full)|disable|
+|POSTGRES_SSLMODE|One of these (disable,allow,prefer,require,verify-ca,verify-full)|prefer|
 |POSTGRES_CA_B64|A base64 encoded ca certificate||
 |SECRET_KEY_BASE|Security key||
 |STREAM_CHANNEL|Postgres channel|events|

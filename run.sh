@@ -1,6 +1,11 @@
 #!/bin/sh
 cat .env.config | envsubst > .env.production
 
+if [ ! -z "$POSTGRES_CA_B64" ]; then
+  mkdir -p /root/.postgresql
+  echo $POSTGRES_CA_B64 | base64 -d > /root/.postgresql/root.crt  # for rails
+fi
+
 unset VERSION # unset VERSION to prevent conflicts in db:migrate
 bin/rails db:migrate
 

@@ -12,7 +12,7 @@ bin/rails db:migrate
 if [ -f "$1" ]
 then
   source .env.production
-  PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -1 -f $2
+  PGPASSWORD=$POSTGRES_PASSWORD PGSSLMODE=$POSTGRES_SSLMODE psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -1 -f $1
 fi
 
 bundle exec puma -C config/puma.rb

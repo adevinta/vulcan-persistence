@@ -42,7 +42,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'webmock', '~> 2.3.2', platform: :mri
-  gem 'simplecov', '~> 0.17.0'
+  gem 'simplecov', '~> 0.17.1'
   gem 'codecov', '~> 0.1.4'
 end
 

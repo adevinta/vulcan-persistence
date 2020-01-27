@@ -11,9 +11,9 @@ gem 'rails', '~> 5.0.7', '>= 5.0.7.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4.2'
 # Added Postgres support
-gem 'pg', '~> 0.18.4'
+gem 'pg', '~> 1.2.2'
 # In order to use UUID as ids
-gem 'ar-uuid', '~> 0.1.2'
+gem 'ar-uuid', '~> 0.2.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -36,20 +36,20 @@ gem 'dotenv-rails', '~> 2.2', '>= 2.2.0'
 # Datadog APM
 gem 'ddtrace', '~> 0.4.0', require: false
 # AASM State machines
-gem 'aasm', '~> 5.0.1'
+gem 'aasm', '~> 5.0.6'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'webmock', '~> 2.3.2', platform: :mri
   gem 'simplecov', '~> 0.17.0'
-  gem 'codecov', '~> 0.1.4'
+  gem 'codecov', '~> 0.1.16'
 end
 
 group :development do
-  gem 'listen', '~> 3.0.8'
+  gem 'listen', '~> 3.2.1'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '~> 2.0.1'
+  gem 'spring', '~> 2.1.0'
   gem 'spring-watcher-listen', '~> 2.0.1'
 end
 
@@ -63,4 +63,4 @@ gem 'aws-sdk-rails', '~> 1.0.1'
 gem 'json-stream', '~> 0.2.1'
 
 # manage views from migrations
-gem 'scenic', '~> 1.4.1'
+gem 'scenic', '~> 1.5.1'

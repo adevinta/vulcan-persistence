@@ -49,7 +49,7 @@ end
 group :development do
   gem 'listen', '~> 3.0.8'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '~> 2.0.1'
+  gem 'spring', '~> 2.1.0'
   gem 'spring-watcher-listen', '~> 2.0.1'
 end
 

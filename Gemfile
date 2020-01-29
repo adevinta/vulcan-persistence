@@ -13,7 +13,7 @@ gem 'sqlite3', '~> 1.3.13'
 # Added Postgres support
 gem 'pg', '~> 0.18.4'
 # In order to use UUID as ids
-gem 'ar-uuid', '~> 0.1.2'
+gem 'ar-uuid', '~> 0.2.1'
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

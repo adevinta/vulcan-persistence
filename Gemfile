@@ -57,7 +57,7 @@ end
 gem 'tzinfo-data', '~> 1.2.2', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # For storing the results in S3
-gem 'aws-sdk-rails', '~> 1.0.1'
+gem 'aws-sdk-rails', '~> 2.1.0'
 
 # json chunk parser
 gem 'json-stream', '~> 0.2.1'

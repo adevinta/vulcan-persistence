@@ -1,8 +1,9 @@
 require 'aws-sdk-rails'
 
-rails_env = ENV['RAILS_ENV']
 region = ENV['REGION'] || ""
-endpoint = ENV['AWS_ENDPOINT'] || ""
+s3_endpoint = ENV['AWS_S3_ENDPOINT'] || ""
+sns_endpoint = ENV['AWS_SNS_ENDPOINT'] || ""
+sqs_endpoint = ENV['AWS_SQS_ENDPOINT'] || ""
 
 if region != ""
   Aws.config.update({
@@ -10,15 +11,9 @@ if region != ""
   })
 end
 
-if endpoint != ""
-  Aws.config.update({
-    endpoint: endpoint,
-    credentials: Aws::Credentials.new('fake_access_key', 'fake_secret_key'),
-    log_level: "debug",
-  })
-end
+fake_credentials = Aws::Credentials.new('fake_access_key', 'fake_secret_key')
 
-if rails_env == "test"
+if ENV['RAILS_ENV'] == "test"
   WebMock.disable_net_connect!(allow_localhost: true)
   # SQS Client
   Rails.application.config.sqs_client = Aws::SQS::Client.new(
@@ -41,8 +36,36 @@ if rails_env == "test"
   Rails.application.config.s3_client = Aws::S3::Client.new(
     stub_responses: true,
   )
+# Not testing, create not mocked clients.
 else
-  Rails.application.config.sqs_client = Aws::SQS::Client.new()
-  Rails.application.config.sns_client = Aws::SNS::Client.new()
-  Rails.application.config.s3_client = Aws::S3::Client.new()
+  # SQS Client
+  if sqs_endpoint != ""
+    Rails.application.config.sqs_client = Aws::SQS::Client.new(
+      :endpoint => sqs_endpoint,
+      :credentials => fake_credentials,
+      :log_level => "debug",
+    )
+  else
+    Rails.application.config.sqs_client = Aws::SQS::Client.new()
+  end
+  # SNS Client
+  if sns_endpoint != ""
+    Rails.application.config.sns_client = Aws::SNS::Client.new(
+      :endpoint => sns_endpoint,
+      :credentials => fake_credentials,
+      :log_level => "debug",
+    )
+  else
+    Rails.application.config.sns_client = Aws::SNS::Client.new()
+  end
+  # S3 Client
+  if s3_endpoint != ""
+    Rails.application.config.s3_client = Aws::S3::Client.new(
+      :endpoint => s3_endpoint,
+      :credentials => fake_credentials,
+      :log_level => "debug",
+    )
+  else
+    Rails.application.config.s3_client = Aws::S3::Client.new()
+  end
 end

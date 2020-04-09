@@ -11,8 +11,6 @@ if region != ""
   })
 end
 
-fake_credentials = Aws::Credentials.new('fake_access_key', 'fake_secret_key')
-
 if ENV['RAILS_ENV'] == "test"
   WebMock.disable_net_connect!(allow_localhost: true)
   # SQS Client
@@ -42,7 +40,6 @@ else
   if sqs_endpoint != ""
     Rails.application.config.sqs_client = Aws::SQS::Client.new(
       :endpoint => sqs_endpoint,
-      :credentials => fake_credentials,
       :log_level => "debug",
     )
   else
@@ -52,7 +49,6 @@ else
   if sns_endpoint != ""
     Rails.application.config.sns_client = Aws::SNS::Client.new(
       :endpoint => sns_endpoint,
-      :credentials => fake_credentials,
       :log_level => "debug",
     )
   else
@@ -62,7 +58,7 @@ else
   if s3_endpoint != ""
     Rails.application.config.s3_client = Aws::S3::Client.new(
       :endpoint => s3_endpoint,
-      :credentials => fake_credentials,
+      :force_path_style => true,
       :log_level => "debug",
     )
   else

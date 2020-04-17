@@ -8,6 +8,8 @@ class SNSService
   end
 
   def publish_message(object, sns_topic_arn = Rails.application.config.sns_topic_arn)
+    Rails.logger.debug "SNSService: Start publishing message"
+    Rails.logger.debug "SNSService: Target topic #{sns_topic_arn}"
     object_type = object.class.name.demodulize
     message = object.to_json
     if object_type == "Check"
@@ -40,5 +42,6 @@ class SNSService
           },
         }
       })
+    Rails.logger.debug "SNSService: Message #{object_type} published successfully"
   end
 end

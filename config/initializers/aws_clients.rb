@@ -39,28 +39,31 @@ if ENV['RAILS_ENV'] == "test"
   }
 end
 
-sqs_options.merge(sqs_endpoint != "" ?
-  {
+if sqs_endpoint != ""
+  sqs_options = {
     :endpoint  => sqs_endpoint,
     :log_level => "debug",
-  } : {}
-)
+  }
+end
 
-sns_options.merge(sns_endpoint != "" ?
-  {
+if sns_endpoint != ""
+  sns_options = {
     :endpoint  => sns_endpoint,
     :log_level => "debug",
-  } : {}
-)
+  }
+end
 
-s3_options.merge(s3_endpoint != "" ?
-  {
+if s3_endpoint != ""
+  s3_options = {
     :endpoint         => s3_endpoint,
     :force_path_style => true,
     :log_level        => "debug",
-  } : {}
-)
+  }
+end
 
+Rails.logger.debug "SQS Client Options: #{sqs_options}"
 Rails.application.config.sqs_client = Aws::SQS::Client.new(sqs_options)
+Rails.logger.debug "SNS Client Options: #{sns_options}"
 Rails.application.config.sns_client = Aws::SNS::Client.new(sns_options)
+Rails.logger.debug "S3 Client Options: #{s3_options}"
 Rails.application.config.s3_client  = Aws::S3::Client.new(s3_options)

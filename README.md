@@ -42,7 +42,7 @@ Those are the variables you have to use:
 |SNS_TOPIC_ARN|Sns topic arn|arn:aws:sns:eu-west-1:xxx:yyy|
 
 You can specify custom AWS endpoints for testing/developing purposes for each one of the
- AWS services used in Vulcan Persistence, in example, by using [Minio](https://min.io/) or [LocalStack](https://localstack.cloud/).  
+ AWS services used in Vulcan Persistence, for example, by using [Minio](https://min.io/) or [LocalStack](https://localstack.cloud/).  
 
 You just need to provide the following env vars:
 

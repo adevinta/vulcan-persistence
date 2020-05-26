@@ -33,8 +33,6 @@ gem 'puma', '~> 3.12'
 gem 'active_model_serializers', '~> 0.10.4'
 # Configure environment with dotenv files
 gem 'dotenv-rails', '~> 2.2', '>= 2.2.0'
-# Datadog APM
-gem 'ddtrace', '~> 0.4.0', require: false
 # AASM State machines
 gem 'aasm', '~> 5.0.1'
 

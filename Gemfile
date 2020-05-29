@@ -33,6 +33,8 @@ gem 'puma', '~> 3.12'
 gem 'active_model_serializers', '~> 0.10.4'
 # Configure environment with dotenv files
 gem 'dotenv-rails', '~> 2.2', '>= 2.2.0'
+# DogStatsD
+gem 'dogstatsd-ruby', '~> 4.8', '>= 4.8.1', require: false
 # AASM State machines
 gem 'aasm', '~> 5.0.1'
 

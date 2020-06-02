@@ -8,7 +8,3 @@ if Rails.application.config.metrics
   Rails.application.config.statsd = Datadog::Statsd.new(metrics_host, metrics_port, :namespace => 'vulcan')
   Rails.application.config.metric_tags = ['component:persistence']
 end
-
-
-
-

@@ -6,6 +6,7 @@ class Check < ApplicationRecord
   include AASM
 
   after_commit :sns_publish
+  after_commit :push_check_metrics, if: -> { Rails.application.config.metrics }
   before_update :verify_state_machine
 
   belongs_to :agent
@@ -83,6 +84,41 @@ class Check < ApplicationRecord
   end
 
   private
+  def push_check_metrics
+    scan_label = ""
+    team_label = ""
+    checktype_label = ""
+    begin
+      scan = Scan.find(self[:scan_id])
+      # obtain info from scan (program name)
+      scan_label = "program-name".downcase || "unknown-program"
+    rescue
+      Rails.logger.warn "error obtaining program name for check [#{self.id}] for pushing metrics"
+      scan_label = "unknown-program"
+    end
+    begin
+      team_label = self[:tag].split(':').last.downcase || "unknown-team"
+    rescue
+      Rails.logger.warn "error obtaining team name for check [#{self.id}] for pushing metrics"
+      team_label = "unknown-team"
+    end
+    begin
+      checktype_label = self.checktype.name.downcase || "unknown-checktype"
+    rescue
+      Rails.logger.warn "error obtaining checktype name for check [#{self.id}] for pushing metrics"
+      checktype_label = "unknown-checktype"
+    end
+    begin
+      check_status = self.status.downcase || "unknown-checkstatus"
+    rescue
+      Rails.logger.warn "error obtaining status name for check [#{self.id}] for pushing metrics"
+      check_status = "unknown-checkstatus"
+    end
+    # metric_tags = ["scan:#{team_label}-#{scan_label}", "checktype:#{checktype_label}", "checkstatus:#{check_status}"]
+    metric_tags = ["scan:purple-periodic-full-scan", "checktype:#{checktype_label}", "checkstatus:#{check_status}"]
+    Metrics.count("scan.check.count", 1, metric_tags)
+  end
+
   def verify_state_machine
     if status
       db_check = Check.find(id)

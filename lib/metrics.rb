@@ -1,7 +1,7 @@
 class Metrics
   def self.increment(metric_name, metric_tags)
     begin
-      Rails.application.config.statsd.count(
+      Rails.application.config.statsd.increment(
         metric_name,
         tags: Rails.application.config.metric_tags + metric_tags
       )

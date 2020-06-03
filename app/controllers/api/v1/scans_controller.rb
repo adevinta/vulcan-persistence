@@ -38,6 +38,8 @@ module Api::V1
     # POST /scans
     def create
       @scan = Scan.new
+      @scan.tag = params[:scan][:tag] || ""
+      @scan.program = params[:scan][:program_id] || ""
 
       if @scan.save
         render json: @scan, status: :created, location: [:v1, @scan]
@@ -88,7 +90,7 @@ module Api::V1
     # Only allow a trusted parameter "white list" through.
     def scan_params
       # NOTE: the :check definition should be in sync with its definition in the ChecksController.
-      params.permit(:scan => [ :checks => [ :check => [ :checktype_id, :checktype_name, :target, :options, :webhook, :jobqueue_id, :jobqueue_name, :tag, :required_vars => [] ] ] ])
+      params.permit(:scan => [ :tag, :program_id, :checks => [ :check => [ :checktype_id, :checktype_name, :target, :options, :webhook, :jobqueue_id, :jobqueue_name, :tag, :required_vars => [] ] ] ])
     end
 
     # Notifies action to stream

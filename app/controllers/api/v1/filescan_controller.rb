@@ -3,6 +3,9 @@ module Api::V1
       # POST /FileScan
       def create
         @scan = Scan.new
+        @scan.tag = params[:tag] || ""
+        @scan.program = params[:program_id] || ""
+
         if @scan.save
           Filescan.save_scan(@scan.id,params)
           render json: @scan, status: :created, location: [:v1, @scan]

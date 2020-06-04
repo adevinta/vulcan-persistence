@@ -103,7 +103,7 @@ class Check < ApplicationRecord
     if self[:tag].blank?
       Rails.logger.warn "error obtaining team name for check [#{self.id}] for pushing metrics"
       # try to obtain tag from scan
-      if scan.nil? || scan.program.blank?
+      if scan.nil? || scan.tag.blank?
         Rails.logger.warn "error obtaining team name name for check [#{self.id}] for pushing metrics from scan"
       else
         team_label = scan.tag.split(':').last.downcase

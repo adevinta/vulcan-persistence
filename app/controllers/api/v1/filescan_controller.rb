@@ -3,8 +3,8 @@ module Api::V1
       # POST /FileScan
       def create
         @scan = Scan.new
-        @scan.tag = params[:tag] || ""
-        @scan.program = params[:program_id] || ""
+        @scan.tag = params[:tag]
+        @scan.program = ScansHelper.normalize_program(params[:program_id])
 
         if @scan.save
           Filescan.save_scan(@scan.id,params)

@@ -1,3 +1,4 @@
+require 'uuid'
 class ScansHelper
   def self.push_created_metric(scan)
     scan_label = "unknown-program"
@@ -15,6 +16,19 @@ class ScansHelper
 
     metric_tags = ["scan:#{team_label}-#{scan_label}"]
     Metrics.count("scan.count", 1, metric_tags)
+  end
+
+  def self.normalize_program(program_id)
+    if program_id.blank?
+      return "unknown-program"
+    end
+    if UUID.validate(program_id)
+      return "custom-program"
+    end
+    if program_id.include? "@"
+      return program_id.split("@").last.downcase
+    end
+    return program_id.downcase
   end
 
   def self.is_aborted(scan_id)

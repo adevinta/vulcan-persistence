@@ -1,4 +1,3 @@
-require 'uuid'
 module Api::V1
   class ScansController < ApplicationController
     before_action :set_scan, only: [:show, :destroy, :checks, :stats, :abort]
@@ -39,8 +38,8 @@ module Api::V1
     # POST /scans
     def create
       @scan = Scan.new
-      @scan.tag = params[:scan][:tag] || ""
-      @scan.program = normalize_program(params[:scan][:program_id])
+      @scan.tag = params[:scan][:tag]
+      @scan.program = ScansHelper.normalize_program(params[:scan][:program_id])
 
       if @scan.save
         render json: @scan, status: :created, location: [:v1, @scan]
@@ -97,19 +96,6 @@ module Api::V1
     # Notifies action to stream
     def notify(action)
       NotificationsHelper.notify(action: action, scan_id: @scan.id)
-    end
-
-    def normalize_program(program_id)
-      if program_id.blank?
-        return "unknown-program"
-      end
-      if UUID.validate(program_id)
-        return "custom-program"
-      end
-      if program_id.include? "@"
-        return program_id.split("@").last.downcase
-      end
-      return program_id.downcase
     end
   end
 end

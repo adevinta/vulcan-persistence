@@ -6,7 +6,7 @@ class Check < ApplicationRecord
   include AASM
 
   after_commit :sns_publish
-  after_commit :push_check_metrics, if: -> { Rails.application.config.metrics }
+  after_commit :push_check_metrics, :on => :create
   before_update :verify_state_machine
 
   belongs_to :agent
@@ -32,6 +32,8 @@ class Check < ApplicationRecord
     state :PURGING
     state :KILLED
     state :TIMEOUT
+
+    after_all_transitions :push_check_metrics
 
     # Enqueue is the event of a check being added to the queue.
     event :enqueue do
@@ -85,37 +87,42 @@ class Check < ApplicationRecord
 
   private
   def push_check_metrics
-    scan_label = ""
-    team_label = ""
-    checktype_label = ""
-    begin
-      scan = Scan.find(self[:scan_id])
-      # obtain info from scan (program name)
-      scan_label = "program-name".downcase || "unknown-program"
-    rescue
+    unless Rails.application.config.metrics
+      return
+    end
+    scan_label = "unknown-program"
+    team_label = "unknown-team"
+    checktype_label = "unknown-checktype"
+    check_status = "unknown-checkstatus"
+    scan = Scan.find_by(id: self[:scan_id])
+    if scan.nil? || scan.program.blank?
       Rails.logger.warn "error obtaining program name for check [#{self.id}] for pushing metrics"
-      scan_label = "unknown-program"
+    else
+      scan_label = scan.program.downcase
     end
-    begin
-      team_label = self[:tag].split(':').last.downcase || "unknown-team"
-    rescue
+    if self[:tag].blank?
       Rails.logger.warn "error obtaining team name for check [#{self.id}] for pushing metrics"
-      team_label = "unknown-team"
+      # try to obtain tag from scan
+      if scan.nil? || scan.program.blank?
+        Rails.logger.warn "error obtaining team name name for check [#{self.id}] for pushing metrics from scan"
+      else
+        team_label = scan.tag.split(':').last.downcase
+      end
+    else
+      team_label = self[:tag].split(':').last.downcase
     end
     begin
-      checktype_label = self.checktype.name.downcase || "unknown-checktype"
+      checktype_label = self.checktype.name.downcase
     rescue
       Rails.logger.warn "error obtaining checktype name for check [#{self.id}] for pushing metrics"
-      checktype_label = "unknown-checktype"
     end
     begin
-      check_status = self.status.downcase || "unknown-checkstatus"
+      check_status = self.status.downcase
     rescue
       Rails.logger.warn "error obtaining status name for check [#{self.id}] for pushing metrics"
-      check_status = "unknown-checkstatus"
     end
-    # metric_tags = ["scan:#{team_label}-#{scan_label}", "checktype:#{checktype_label}", "checkstatus:#{check_status}"]
-    metric_tags = ["scan:purple-periodic-full-scan", "checktype:#{checktype_label}", "checkstatus:#{check_status}"]
+
+    metric_tags = ["scan:#{team_label}-#{scan_label}", "checktype:#{checktype_label}", "checkstatus:#{check_status}"]
     Metrics.count("scan.check.count", 1, metric_tags)
   end
 

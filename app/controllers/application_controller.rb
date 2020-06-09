@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::Serialization
   before_action :check_content_type
-  before_action :push_request_metrics,  if: -> { Rails.application.config.metrics }
   after_action  :push_response_metrics, if: -> { Rails.application.config.metrics }
   around_action :push_duration_metrics, if: -> { Rails.application.config.metrics }
 
@@ -16,18 +15,13 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def push_request_metrics
-    metic_name = "request.#{metric_category}.total"
-    Metrics.increment(metic_name, metric_tags)
-  end
-
   def push_response_metrics
     if is_failed
-      metic_name = "request.#{metric_category}.failed"
+      metic_name = "request.failed"
       Metrics.increment(metic_name, metric_tags)
     end
     # Metrics per status code
-    metic_name = "request.#{metric_category}.#{status.to_s}"
+    metic_name = "request.total"
     Metrics.increment(metic_name, metric_tags)
   end
 
@@ -36,7 +30,7 @@ class ApplicationController < ActionController::API
       start = Time.now
       yield
       duration = Time.now - start
-      metic_name = "request.#{metric_category}.duration"
+      metic_name = "request.duration"
       Metrics.histogram(metic_name, duration, metric_tags)
     end
   end
@@ -44,29 +38,26 @@ class ApplicationController < ActionController::API
   def metric_tags
     tags = []
     begin
-      tags = ["entity:#{controller_name}", "action:#{action_name}"]
+      tags = tags + ["entity:#{controller_name}"]
     rescue
-      tags = ["entity:unknown", "action:unknown"]
+      tags = tags + ["entity:unknown"]
+    end
+    begin
+      tags = tags + ["action:#{action_name}"]
+    rescue
+      tags = tags + ["action:unknown"]
+    end
+    begin
+      tags = tags + ["method:#{request.method.to_lower}"]
+    rescue
+      tags = tags + ["method:unknown"]
+    end
+    begin
+      tags = tags + ["status:#{status}"]
+    rescue
+      tags = tags + ["status:unknown"]
     end
     return tags
-  end
-
-  def metric_category
-    begin
-      case request.method
-      when 'GET'
-        return 'read'
-      when 'POST'
-        return 'create'
-      when 'PUT', 'PATCH'
-        return 'update'
-      when 'DELETE'
-        return 'delete'
-      end
-      return 'other'
-    rescue
-      return 'unknown'
-    end
   end
 
   def is_failed

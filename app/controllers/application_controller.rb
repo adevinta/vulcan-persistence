@@ -16,6 +16,9 @@ class ApplicationController < ActionController::API
   end
 
   def push_response_metrics
+    if exclude_from_metrics(controller_name)
+      return
+    end
     if is_failed
       metic_name = "request.failed"
       Metrics.increment(metic_name, metric_tags)
@@ -26,6 +29,9 @@ class ApplicationController < ActionController::API
   end
 
   def push_duration_metrics
+    if exclude_from_metrics(controller_name)
+      return
+    end
     unless is_failed
       start = Time.now
       yield
@@ -48,7 +54,7 @@ class ApplicationController < ActionController::API
       tags = tags + ["action:unknown"]
     end
     begin
-      tags = tags + ["method:#{request.method.to_lower}"]
+      tags = tags + ["method:#{request.method.downcase}"]
     rescue
       tags = tags + ["method:unknown"]
     end
@@ -69,5 +75,14 @@ class ApplicationController < ActionController::API
     rescue
       return true
     end
+  end
+
+  def exclude_from_metrics(controller)
+    s = Set.new(
+      [
+        "healthchecks",
+      ]
+    )
+    return s.include?(controller)
   end
 end

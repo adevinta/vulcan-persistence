@@ -1,6 +1,6 @@
 require 'uuid'
 class ScansHelper
-  def self.push_metric(scan,scanstatus="created")
+  def self.push_metric(scan,scanstatus="running")
     unless Rails.application.config.metrics
       return
     end

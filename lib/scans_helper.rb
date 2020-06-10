@@ -38,7 +38,6 @@ class ScansHelper
     if scan_id
       scan = Scan.find(scan_id)
       unless scan.nil?
-        ScansHelper.push_metric(scan,"aborted")
         return scan.aborted
       end
     end

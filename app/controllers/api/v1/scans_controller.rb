@@ -76,6 +76,7 @@ module Api::V1
       if @scan.save
         render status: :accepted
         notify('abort')
+        ScansHelper.push_metric(@scan,"aborted")
       else
         render json: @scan.errors, status: :unprocessable_entity
       end

@@ -6,7 +6,6 @@ class Check < ApplicationRecord
   include AASM
 
   after_commit :sns_publish
-  after_commit :push_check_metrics, :on => :create
   before_update :verify_state_machine
 
   belongs_to :agent

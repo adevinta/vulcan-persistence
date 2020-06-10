@@ -43,7 +43,7 @@ module Api::V1
 
       if @scan.save
         render json: @scan, status: :created, location: [:v1, @scan]
-        ScansHelper.push_created_metric(@scan) if Rails.application.config.metrics
+        ScansHelper.push_metric(@scan)
       else
         render json: @scan.errors, status: :unprocessable_entity
         return

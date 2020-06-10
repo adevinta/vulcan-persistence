@@ -1,6 +1,9 @@
 require 'uuid'
 class ScansHelper
-  def self.push_created_metric(scan)
+  def self.push_metric(scan,scanstatus="created")
+    unless Rails.application.config.metrics
+      return
+    end
     scan_label = "unknown-program"
     team_label = "unknown-team"
     if scan[:program].blank?
@@ -14,7 +17,7 @@ class ScansHelper
       team_label = scan[:tag].split(':').last.downcase
     end
 
-    metric_tags = ["scan:#{team_label}-#{scan_label}"]
+    metric_tags = ["scan:#{team_label}-#{scan_label}","scanstatus:#{scanstatus}"]
     Metrics.count("scan.count", 1, metric_tags)
   end
 
@@ -35,6 +38,7 @@ class ScansHelper
     if scan_id
       scan = Scan.find(scan_id)
       unless scan.nil?
+        ScansHelper.push_metric(scan,"aborted")
         return scan.aborted
       end
     end

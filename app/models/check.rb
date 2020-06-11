@@ -7,6 +7,10 @@ class Check < ApplicationRecord
 
   after_commit :sns_publish
   before_update :verify_state_machine
+  # In case the transaction is rolled back, we might had push an incorrect metric.
+  # Proper hook to push the metric would be after_commit, but then is harder to
+  # detect if status has changed. This is the best compromise in effort and consistency.
+  after_save :push_check_metrics, if: -> { Rails.application.config.metrics && status_changed? }
 
   belongs_to :agent
   belongs_to :checktype
@@ -31,8 +35,6 @@ class Check < ApplicationRecord
     state :PURGING
     state :KILLED
     state :TIMEOUT
-
-    after_all_transitions :push_check_metrics
 
     # Enqueue is the event of a check being added to the queue.
     event :enqueue do
@@ -86,9 +88,6 @@ class Check < ApplicationRecord
 
   private
   def push_check_metrics
-    unless Rails.application.config.metrics
-      return
-    end
     scan_label = "unknown-program"
     team_label = "unknown-team"
     checktype_label = "unknown-checktype"

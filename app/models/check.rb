@@ -10,7 +10,7 @@ class Check < ApplicationRecord
   # In case the transaction is rolled back, we might had push an incorrect metric.
   # Proper hook to push the metric would be after_commit, but then is harder to
   # detect if status has changed. This is the best compromise in effort and consistency.
-  after_save :push_check_metrics, if: -> { Rails.application.config.metrics && status_changed? }
+  after_save :push_check_metrics, if: -> { Rails.application.config.metrics && (status_changed? || new_record?) }
 
   belongs_to :agent
   belongs_to :checktype

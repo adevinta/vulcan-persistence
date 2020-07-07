@@ -33,8 +33,7 @@ class Metrics
       )
       Rails.logger.debug "pushed histogram metric [#{metric_name}] with tags [#{metric_tags}]"
     rescue
-      Rails.logger.warn "error pushing histogram metric [#{metric_name}] with tags [#{metric_tags}]"    
+      Rails.logger.warn "error pushing histogram metric [#{metric_name}] with tags [#{metric_tags}]"
     end
   end
 end
-  

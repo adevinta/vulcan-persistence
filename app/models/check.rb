@@ -1,6 +1,7 @@
 class Check < ApplicationRecord
-  # checktype_name is a virtual attribute, not persisted in the model.
+  # checktype_name and program_team are virtual attributes, not persisted in the model.
   attr_accessor :checktype_name
+  attr_accessor :program_team
 
   include Filterable
   include AASM

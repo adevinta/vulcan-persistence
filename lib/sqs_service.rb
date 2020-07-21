@@ -12,6 +12,7 @@ class SQSService
     resp = @sqs.get_queue_url({
       queue_name: check.queue_name,
     })
+    program_team = ScansHelper.get_program_team_by_scan_id(check.scan_id)
     Rails.logger.debug "SQSService: Target queue #{resp.queue_url}"
     check_message = {
       "check_id" => check.id,
@@ -21,6 +22,7 @@ class SQSService
       "options" => check.options,
       "required_vars" => check.required_vars,
       "scan_id" => check.scan_id,
+      "program_team" => program_team,
       "start_time" => start_time
     }
 

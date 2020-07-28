@@ -13,14 +13,16 @@ class SNSService
     object_type = object.class.name.demodulize
     message = object.to_json
     if object_type == "Check"
-      program_team = ScansHelper.get_program_team_by_scan_id(object.scan_id)
-      object.program_team = program_team
+      if object.scan_id
+        scan = Scan.find(object.scan_id)
+      end
+      object.metadata = ScansHelper.get_metadata(scan)
       checktype = Checktype.find(object.checktype_id)
       unless checktype.nil?
         # using Check's checktype_name virtual attribute.
         object.checktype_name = checktype.name
       end
-      message = object.to_json(methods: [:checktype_name, :program_team])
+      message = object.to_json(methods: [:checktype_name, :metadata])
     end
     status = "UNKNOWN"
     begin

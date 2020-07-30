@@ -27,7 +27,7 @@ class ScansHelper
       return
     end
     metadata = self.get_metadata(scan)
-    program_team = "#{metadata[:program]}-#{metadata[:team]}"
+    program_team = "#{metadata[:team]}-#{metadata[:program]}"
     metric_tags = ["scan:#{program_team}","scanstatus:#{scanstatus}"]
     Metrics.count("scan.count", 1, metric_tags)
   end

@@ -65,10 +65,9 @@ GEM
     byebug (9.0.6)
     case_transform (0.2)
       activesupport
-    codecov (0.1.14)
+    codecov (0.2.8)
       json
       simplecov
-      url
     concurrent-ruby (1.1.5)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
@@ -167,7 +166,6 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    url (0.3.2)
     uuid (2.3.9)
       macaddr (~> 1.0)
     webmock (2.3.2)
@@ -187,7 +185,7 @@ DEPENDENCIES
   ar-uuid (~> 0.1.2)
   aws-sdk-rails (~> 1.0.1)
   byebug (~> 9.0.6)
-  codecov (~> 0.1.4)
+  codecov (~> 0.2.8)
   dogstatsd-ruby (~> 4.8, >= 4.8.1)
   dotenv-rails (~> 2.2, >= 2.2.0)
   json-stream (~> 0.2.1)

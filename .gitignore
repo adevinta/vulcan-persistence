@@ -25,3 +25,7 @@
 
 # Simplecov coverage reports
 coverage
+
+# Ignore IntelliJ files
+.idea/
+*.iml

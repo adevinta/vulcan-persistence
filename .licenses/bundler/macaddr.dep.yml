@@ -1,0 +1,13 @@
+---
+name: macaddr
+version: 1.7.2
+type: bundler
+summary: macaddr
+homepage: https://github.com/ahoward/macaddr
+license: other
+licenses:
+- sources: LICENSE
+  text: 'Ruby
+
+    '
+notices: []

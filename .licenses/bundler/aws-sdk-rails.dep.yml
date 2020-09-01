@@ -1,0 +1,9 @@
+---
+name: aws-sdk-rails
+version: 1.0.1
+type: bundler
+summary: AWS SDK for Ruby Rails Plugin
+homepage: http://github.com/awslabs/aws-sdk-rails
+license: none
+licenses: []
+notices: []

@@ -1,0 +1,11 @@
+---
+name: jsonapi-renderer
+version: 0.2.2
+type: bundler
+summary: Render JSONAPI documents.
+homepage: https://github.com/jsonapi-rb/jsonapi-renderer
+license: mit
+licenses:
+- sources: README.md
+  text: jsonapi-renderer is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+notices: []

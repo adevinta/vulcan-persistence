@@ -1,0 +1,9 @@
+---
+name: aws-sdk-core
+version: 2.11.343
+type: bundler
+summary: AWS SDK for Ruby - Core
+homepage: http://github.com/aws/aws-sdk-ruby
+license: none
+licenses: []
+notices: []

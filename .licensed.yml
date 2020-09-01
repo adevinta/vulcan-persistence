@@ -1,0 +1,17 @@
+shared_cache: true
+allowed:
+  - mit
+  - apache-2.0
+  - bsd-2-clause
+  - bsd-3-clause
+reviewed:
+  bundler:
+    - aws-sdk-core
+    - aws-sdk-rails
+    - aws-sdk-resources
+    - concurrent-ruby
+    - puma
+    - sqlite3
+    - systemu
+    - websocket-driver
+    - websocket-extensions

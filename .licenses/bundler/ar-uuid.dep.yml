@@ -1,0 +1,10 @@
+---
+name: ar-uuid
+version: 0.1.2
+type: bundler
+summary: Add UUID support for ActiveRecord. It enforces uuid primary keys, fixes ActiveRecord's
+  first/last methods and more.
+homepage: http://rubygems.org/gems/ar-uuid
+license: none
+licenses: []
+notices: []

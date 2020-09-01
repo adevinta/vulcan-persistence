@@ -8,6 +8,8 @@ addons:
 before_script:
   - psql -c "CREATE USER vulcan WITH PASSWORD 'vulcan';" -U postgres
   - psql -c "ALTER USER vulcan WITH SUPERUSER;" -U postgres
+install:
+  - ./script/bootstrap
 script:
   - ./script/test
 after_success:

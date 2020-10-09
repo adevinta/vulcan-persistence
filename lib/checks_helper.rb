@@ -92,8 +92,10 @@ class ChecksHelper
       begin
         scan = Scan.find(check.scan_id)
       rescue ActiveRecord::RecordNotFound => e
-        Rails.logger.error "scan with id #{check.scan_id} not found"
-        return nil
+        Rails.logger.warm "scan with id #{check.scan_id} not found"
+        # We allow to create checks with a scan id that is not controlled
+        # by the persistence.
+        return check
       end
       unless scan.increment!(:size)
         Rails.logger.error "error incrementing the size of the scan #{scan.id}"

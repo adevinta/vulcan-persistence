@@ -17,7 +17,7 @@ $ bundle install
 ```
 3. Prepare the test database by running:
 ```
-$ bash script/testdb
+$bash script/testdb 
 $ RAILS_ENV=test rake db:create
 $ RAILS_ENV=test rake db:migrate
 ```

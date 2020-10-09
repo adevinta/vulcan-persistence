@@ -36,6 +36,7 @@ class Check < ApplicationRecord
     state :PURGING
     state :KILLED
     state :TIMEOUT
+    state :INCONCLUSIVE
 
     # Enqueue is the event of a check being added to the queue.
     event :enqueue do
@@ -80,6 +81,10 @@ class Check < ApplicationRecord
     # Finish is the event of a check finishing successfully.
     event :finish do
       transitions :from => :RUNNING, :to => :FINISHED
+    end
+    # Inconclusive is the event of a check ending in an inconclusive state.
+    event :inconclusive do
+      transitions :from => :RUNNING, :to => :INCONCLUSIVE
     end
   end
 
@@ -151,6 +156,8 @@ class Check < ApplicationRecord
           db_check.kill
         when "FINISHED"
           db_check.finish
+        when "INCONCLUSIVE"
+          db_check.inconclusive
         end
       end
     end

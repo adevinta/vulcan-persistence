@@ -1,5 +1,6 @@
 class ChecksHelper
   def self.create_check(params, scan_id = nil)
+    puts params.inspect
     if params[:checktype_name].present?
       if params[:checktype_id].present?
         Rails.logger.error "both checktype_name and checktype_id present in params: #{params.inspect}"
@@ -72,9 +73,23 @@ class ChecksHelper
     check.options = hash_checktype_options.deep_merge(hash_param_options).to_json
 
     check.required_vars = checktype.required_vars
-
+    if check.scan_id
+      scan_id = check.scan_id
+    end
     unless scan_id.nil?
-      check.scan_id = scan_id
+      begin
+        check.scan_id = scan_id
+        scan = Scan.find(check.scan_id)
+      rescue ActiveRecord::RecordNotFound => e
+        begin
+          puts 'EXCEPTION FOUND'
+          Rails.logger.info "scan with id #{check.scan_id} not found creating it"
+          puts 'SCAN NEW'
+          scan = Scan.new
+          scan.id = check.scan_id
+          scan.save
+        end
+      end
     end
 
     # queue_name can't be nil as is checked some lines above

@@ -82,9 +82,7 @@ class ChecksHelper
         scan = Scan.find(check.scan_id)
       rescue ActiveRecord::RecordNotFound => e
         begin
-          puts 'EXCEPTION FOUND'
           Rails.logger.info "scan with id #{check.scan_id} not found creating it"
-          puts 'SCAN NEW'
           scan = Scan.new
           scan.id = check.scan_id
           scan.save

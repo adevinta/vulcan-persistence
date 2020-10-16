@@ -65,3 +65,5 @@ gem 'json-stream', '~> 0.2.1'
 
 # manage views from migrations
 gem 'scenic', '~> 1.4.1'
+
+gem 'shoryuken'

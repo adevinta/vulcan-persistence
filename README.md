@@ -40,6 +40,9 @@ Those are the variables you have to use:
 |REGION|AWS region|eu-west-1|
 |SCANS_BUCKET|S3 bucket for scans|my-vulcan-scan-bucket|
 |SNS_TOPIC_ARN|Sns topic arn|arn:aws:sns:eu-west-1:xxx:yyy|
+|AWS_CREATE_CHECKS_SQS_URL| url of the queue for the workers to async create checks (optional)
+|AWS_CREATE_CHECKS_WORKERS| number of "create checks" workers to init (optional)
+
 
 You can specify custom AWS endpoints for testing/developing purposes for each one of the
  AWS services used in Vulcan Persistence, for example, by using [Minio](https://min.io/) or [LocalStack](https://localstack.cloud/).  

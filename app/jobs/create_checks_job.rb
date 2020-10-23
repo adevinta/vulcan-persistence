@@ -5,8 +5,10 @@ class CreateChecksJob < ActiveJob::Base
     poller.poll(skip_delete: true, max_number_of_messages: 10) do |messages|
       messages.each do |msg|
         begin
-          check_params = ActionController::Parameters.new(JSON.parse(msg.body))
-          Rails.logger.info(check_params)
+          body = JSON.parse(msg.body)
+          payload = JSON.parse(body['Message'])
+          check_params = ActionController::Parameters.new(payload)
+          Rails.logger.info('Check params ' + check_params.inspect)
           ChecksHelper.create_check_with_id(check_params[:check])
         rescue StandardError => e
           Rails.logger.error("Error: #{e.message}, stack trace: #{e.backtrace_locations.inspect}")

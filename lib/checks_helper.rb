@@ -193,7 +193,7 @@ def self.create_check_with_id(params)
         end
       end
     end
-
+    Rails.logger.info("scan #{scan.inspect}")
     # queue_name can't be nil as is checked some lines above
     check.queue_name = queue_name
     begin

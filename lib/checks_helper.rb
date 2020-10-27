@@ -193,14 +193,14 @@ def self.create_check_with_id(params)
         end
       end
     end
-    Rails.logger.info("scan #{scan.inspect}")
     # queue_name can't be nil as is checked some lines above
     check.queue_name = queue_name
     begin
       check.save
     rescue ActiveRecord::RecordNotUnique
       Rails.logger.info "checks already exits, skipping: #{check.inspect}"
-      return nil
+      check = Check.find(check.id)
+      return check
     end
     # NOTE: take into account that increasing the scan size for every created chheck,
     # is increasing the number of queries to database x3, as we are getting the scan

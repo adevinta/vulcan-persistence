@@ -3,8 +3,8 @@ require 'test_helper'
 describe 'scan_processor' do
   it 'should process a scan' do
     checks_params = { scan: { checks: [
-      { check: { checktype_name: 'tls', target: 'localhost', tag:'tag1'}},
-      { check: { checktype_name: 'tls', target: 'www.example.com', tag:'tag2'}}
+      { check: { checktype_name: 'tls', target: 'localhost', tag: 'tag1'}},
+      { check: { checktype_name: 'tls', target: 'www.example.com', tag: 'tag2', assettype: 'Hostname'}}
     ]}}
     s = StringIO.new checks_params.to_json.to_s
     processor = ScanProcessor.new(Rails.logger, method(:check_parsed))
@@ -13,8 +13,8 @@ describe 'scan_processor' do
     end
 
     assert_equal(@checks,[
-                   { 'checktype_id' => '', 'checktype_name' => 'tls', 'target' => 'localhost', 'options' => '', 'webhook' => '', 'tag' => 'tag1', 'jobqueue_id' => nil, 'jobqueue_name' => nil, 'required_vars' => []},
-                   { 'checktype_id' => '', 'checktype_name' => 'tls', 'target' => 'www.example.com', 'options' => '', 'webhook' => '', 'tag' => 'tag2', 'jobqueue_id' => nil, 'jobqueue_name' => nil, 'required_vars' => []}
+                   { 'checktype_id' => '', 'checktype_name' => 'tls', 'target' => 'localhost', 'options' => '', 'webhook' => '', 'tag' => 'tag1', 'jobqueue_id' => nil, 'jobqueue_name' => nil, 'assettype' => '', 'required_vars' => []},
+                   { 'checktype_id' => '', 'checktype_name' => 'tls', 'target' => 'www.example.com', 'options' => '', 'webhook' => '', 'tag' => 'tag2', 'jobqueue_id' => nil, 'jobqueue_name' => nil, 'assettype' => 'Hostname', 'required_vars' => []}
                  ])
   end
   def check_parsed(check)

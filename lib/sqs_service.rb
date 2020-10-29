@@ -26,7 +26,8 @@ class SQSService
       "required_vars" => check.required_vars,
       "scan_id" => check.scan_id,
       "metadata" => metadata,
-      "start_time" => start_time
+      "start_time" => start_time,
+      "assettype" => check.assettype,
     }
 
     resp = @sqs.send_message({

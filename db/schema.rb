@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200603163948) do
+ActiveRecord::Schema.define(version: 20201028102229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20200603163948) do
     t.string   "queue_name"
     t.string   "tag"
     t.text     "required_vars", default: [],                     array: true
+    t.string   "assettype"
     t.index ["agent_id"], name: "index_checks_on_agent_id", using: :btree
     t.index ["checktype_id"], name: "index_checks_on_checktype_id", using: :btree
     t.index ["scan_id"], name: "index_checks_on_scan_id", using: :btree

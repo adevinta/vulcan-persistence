@@ -2,7 +2,7 @@ module Api::V1
   class CheckSerializer < ActiveModel::Serializer
     include Rails.application.routes.url_helpers
 
-    attributes :id, :target, :status, :options, :webhook, :progress, :raw, :report, :queue_name, :tag
+    attributes :id, :target, :status, :options, :webhook, :progress, :raw, :report, :queue_name, :tag, :assettype
 
     has_one :agent, serializer: Api::V1::AgentSerializer
     has_one :checktype, serializer: Api::V1::ChecktypeSerializer

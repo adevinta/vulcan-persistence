@@ -84,7 +84,7 @@ class Check < ApplicationRecord
     end
     # Inconclusive is the event of a check ending in an inconclusive state.
     event :inconclusive do
-      transitions :from => :RUNNING, :to => :INCONCLUSIVE
+      transitions :from => [:ASSIGNED, :RUNNING], :to => :INCONCLUSIVE
     end
   end
 

@@ -14,7 +14,7 @@ class ChecksHelper
         Rails.logger.error "checktype with name #{params[:checktype_name]} not found"
         return nil
       end
-
+      # Here we now for sure that the checktype exists and it is enabled.
       params[:checktype_id] = checktype.id
       params.delete(:checktype_name)
     elsif params[:checktype_id].present?
@@ -29,10 +29,7 @@ class ChecksHelper
         return nil
       end
 
-      if checktype.deleted_at || !checktype.enabled
-        Rails.logger.error "checktype with id #{params[:checktype_id]} not found"
-        return nil
-      end
+      
     else
       Rails.logger.error "both checktype_name and checktype_id missing in params: #{params.inspect}"
       return nil

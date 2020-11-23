@@ -37,9 +37,17 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  config.log_level =  ENV['LOG_LEVEL'] || :warn
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    config.log_formatter = ::Logger::Formatter.new
+    logger = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
+  end
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.

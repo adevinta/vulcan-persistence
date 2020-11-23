@@ -6,7 +6,7 @@ class CreateChecksJob < ActiveJob::Base
       messages.each do |msg|
         begin
           create_check = extract_check_params(msg)
-          Rails.logger.info("check to create #{create_check}")
+          Rails.logger.debug("check to create #{create_check}")
           # If this function does not return a value if the message was not
           # properly formated so we delete it from the queue.
           if create_check
@@ -16,7 +16,7 @@ class CreateChecksJob < ActiveJob::Base
         rescue StandardError => e
           Rails.logger.error("Error: #{e.message}, stack trace: #{e.backtrace_locations.inspect}")
         else
-          Rails.logger.info('message processed')
+          Rails.logger.debug('message processed')
           poller.delete_messages([msg])
         end
       end

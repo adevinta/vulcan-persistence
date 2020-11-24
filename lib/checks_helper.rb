@@ -1,8 +1,7 @@
 class ChecksHelper
   def self.create_check(params, scan_id = nil)
-     program_id = params.fetch(:program_id) if params.has_key?(:program_id)
+    program_id = params.fetch(:program_id) if params.has_key?(:program_id)
     params = params.slice(:checktype_id, :checktype_name, :scan_id, :id, :target, :options, :webhook, :jobqueue_id, :jobqueue_name, :tag, :required_vars => [])
-    # params.permit!
     if params[:checktype_name].present?
       if params[:checktype_id].present?
         Rails.logger.error "both checktype_name and checktype_id present in params: #{params.inspect}"
@@ -115,6 +114,6 @@ class ChecksHelper
         return nil
       end
     end
-  check
+    check
   end
 end

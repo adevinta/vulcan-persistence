@@ -1,5 +1,7 @@
 class ChecksHelper
   def self.create_check(params, scan_id = nil)
+    program_id = params.fetch(:program_id) if params.has_key?(:program_id)
+    params = params.slice(:checktype_id, :checktype_name, :scan_id, :id, :target, :options, :webhook, :jobqueue_id, :jobqueue_name, :tag, :required_vars => [])
     if params[:checktype_name].present?
       if params[:checktype_id].present?
         Rails.logger.error "both checktype_name and checktype_id present in params: #{params.inspect}"
@@ -11,7 +13,7 @@ class ChecksHelper
         Rails.logger.error "checktype with name #{params[:checktype_name]} not found"
         return nil
       end
-
+      # Here we now for sure that the checktype exists and it is enabled.
       params[:checktype_id] = checktype.id
       params.delete(:checktype_name)
     elsif params[:checktype_id].present?
@@ -26,10 +28,7 @@ class ChecksHelper
         return nil
       end
 
-      if checktype.deleted_at || !checktype.enabled
-        Rails.logger.error "checktype with id #{params[:checktype_id]} not found"
-        return nil
-      end
+      
     else
       Rails.logger.error "both checktype_name and checktype_id missing in params: #{params.inspect}"
       return nil
@@ -47,7 +46,6 @@ class ChecksHelper
 
     # TODO: check what happens if params doesn't comply with the model.
     check = Check.new(params)
-
     # Sanitize and merge check options
     hash_param_options = Hash.new
     begin
@@ -72,28 +70,44 @@ class ChecksHelper
     check.options = hash_checktype_options.deep_merge(hash_param_options).to_json
 
     check.required_vars = checktype.required_vars
-
-    unless scan_id.nil?
-      check.scan_id = scan_id
+    if check.scan_id
+      scan_id = check.scan_id
     end
-
+    unless scan_id.nil?
+      begin
+        check.scan_id = scan_id
+        scan = Scan.find(check.scan_id)
+      rescue ActiveRecord::RecordNotFound => e
+        begin
+          Rails.logger.info "scan with id #{check.scan_id} not found creating it"
+          scan = Scan.new
+          scan.id = check.scan_id
+          scan.tag = check.tag if check.tag
+          scan.program = ScansHelper.normalize_program(program_id) if program_id
+          scan.save
+        end
+      end
+    end
     # queue_name can't be nil as is checked some lines above
     check.queue_name = queue_name
-
-    unless check.save
-      Rails.logger.error "error saving the check: #{check.inspect}"
-      return nil
+    begin
+      check.save
+    rescue ActiveRecord::RecordNotUnique
+      Rails.logger.info "checks already exits, skipping: #{check.inspect}"
+      check = Check.find(check.id)
+      return check
     end
-
     # NOTE: take into account that increasing the scan size for every created chheck,
     # is increasing the number of queries to database x3, as we are getting the scan
     # from the database and saving it again, for every created check.
     if check.scan_id
       begin
         scan = Scan.find(check.scan_id)
-      rescue ActiveRecord::RecordNotFound => e
-        Rails.logger.error "scan with id #{check.scan_id} not found"
-        return nil
+      rescue ActiveRecord::RecordNotFound
+        Rails.logger.warm "scan with id #{check.scan_id} not found"
+        # We allow to create checks with a scan id that is not controlled
+        # by the persistence.
+        return check
       end
       unless scan.increment!(:size)
         Rails.logger.error "error incrementing the size of the scan #{scan.id}"

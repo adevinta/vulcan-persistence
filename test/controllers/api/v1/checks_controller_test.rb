@@ -255,11 +255,9 @@ module Api::V1
       assert_response :ok
     end
 
-    test "should fail update check to timeout" do
+    test "should allow to update check to timeout when out of order" do
       patch v1_check_url(@check09), params: { check: { status: "TIMEOUT" } }, as: :json
-      post_response = JSON.parse(response.body)
-      assert_equal('Unsupported status transition', post_response['error'])
-      assert_response 409
+      assert_response :ok
     end
   end
 end

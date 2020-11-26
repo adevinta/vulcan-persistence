@@ -9,7 +9,6 @@ module Api::V1
         return
       end
       @checks = Check.where(deleted_at: nil).filter(params.slice(:status, :target, :checktype_id, :agent_id))
-
       render json: @checks
     end
 
@@ -43,12 +42,16 @@ module Api::V1
             return
           end
           render json: @check
+          return
         end
-      rescue AASM::InvalidTransition
-        render :json => { :error => "Unsupported status transition"}, status: :conflict
-      rescue Exception
+      rescue StandardError => e
+        Rails.logger.error(e.to_s)
         render json: @check.errors, status: :unprocessable_entity
+        return
       end
+      # We do not return the update was not applied to allow out of order calls
+      # to work.
+      render json: @check
     end
 
     # DELETE /checks/1
@@ -64,12 +67,15 @@ module Api::V1
     # POST /checks/1/abort
     def abort
       begin
-        @check.abort!
+        aborted = @check.abort!
+        if !aborted
+          render :json => { :error => "Unsupported status transition"}, status: :conflict
+          return
+        end
         notify('abort')
         render json: @check
-      rescue AASM::InvalidTransition
-        render :json => { :error => "Unsupported status transition"}, status: :conflict
-      rescue Exception
+      rescue StandardError => e
+        Rails.logger.error(e.to_s)
         render json: @check.errors, status: :unprocessable_entity
       end
     end
@@ -77,12 +83,15 @@ module Api::V1
     # POST /checks/1/kill
     def kill
       begin
-        @check.purge!
+        purging = @check.purge!
+        unless purging
+          render :json => { :error => "Unsupported status transition"}, status: :conflict
+          return
+        end
         notify('kill')
         render json: @check
-      rescue AASM::InvalidTransition
-        render :json => { :error => "Unsupported status transition"}, status: :conflict
-      rescue Exception
+      rescue StandardError => e
+        Rails.logger.error(e.to_s)
         render json: @check.errors, status: :unprocessable_entity
       end
     end
@@ -97,7 +106,7 @@ module Api::V1
     def check_params
       # NOTE: the :check definition should be in sync with its definition in the
       # ScansController and the scan processor in lib/scan_processor.rb.
-      params.require(:check).permit(:target, :status, :options, :webhook, :agent_id, :checktype_id, :checktype_name, :progress, :raw, :report, :scan_id, :jobqueue_id, :jobqueue_name, :tag, :assettype, :required_vars => [])
+      params.require(:check).permit(:id, :target, :status, :options, :webhook, :agent_id, :checktype_id, :checktype_name, :progress, :raw, :report, :scan_id, :jobqueue_id, :jobqueue_name, :tag, :assettype, :required_vars => [])
     end
 
     # Notifies action to stream

@@ -10,7 +10,7 @@ class CreateChecksJob < ActiveJob::Base
           # If this function does not return a value if the message was not
           # properly formated so we delete it from the queue.
           if create_check
-            check = ChecksHelper.create_check_with_id(create_check)
+            check = ChecksHelper.create_check(create_check)
             ChecksEnqueueJob.perform_now([check], check.created_at.to_s) if check
           end
         rescue StandardError => e

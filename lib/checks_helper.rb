@@ -85,6 +85,9 @@ class ChecksHelper
           scan.tag = check.tag if check.tag
           scan.program = ScansHelper.normalize_program(program_id) if program_id
           scan.save
+        # If scan has already been created by another
+        # worker, continue.
+        rescue ActiveRecord::RecordNotUnique => e
         end
       end
     end
@@ -109,7 +112,7 @@ class ChecksHelper
         # by the persistence.
         return check
       end
-      unless scan.increment!(:size)
+      unless scan.increment!(:size) # DJS: Race condition incrementing scan size ?
         Rails.logger.error "error incrementing the size of the scan #{scan.id}"
         return nil
       end

@@ -112,9 +112,11 @@ class ChecksHelper
         # by the persistence.
         return check
       end
-      unless scan.increment_counter(:size)
-        Rails.logger.error "error incrementing the size of the scan #{scan.id}"
-        return nil
+      scan.with_lock do
+        unless scan.increment!(:size)
+          Rails.logger.error "error incrementing the size of the scan #{scan.id}"
+          return nil
+        end
       end
     end
     check

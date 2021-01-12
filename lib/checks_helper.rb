@@ -85,6 +85,9 @@ class ChecksHelper
           scan.tag = check.tag if check.tag
           scan.program = ScansHelper.normalize_program(program_id) if program_id
           scan.save
+        # If scan has already been created by another
+        # worker, continue.
+        rescue ActiveRecord::RecordNotUnique => e
         end
       end
     end
@@ -97,7 +100,7 @@ class ChecksHelper
       check = Check.find(check.id)
       return check
     end
-    # NOTE: take into account that increasing the scan size for every created chheck,
+    # NOTE: take into account that increasing the scan size for every created check,
     # is increasing the number of queries to database x3, as we are getting the scan
     # from the database and saving it again, for every created check.
     if check.scan_id
@@ -109,9 +112,11 @@ class ChecksHelper
         # by the persistence.
         return check
       end
-      unless scan.increment!(:size)
-        Rails.logger.error "error incrementing the size of the scan #{scan.id}"
-        return nil
+      scan.with_lock do
+        unless scan.increment!(:size)
+          Rails.logger.error "error incrementing the size of the scan #{scan.id}"
+          return nil
+        end
       end
     end
     check

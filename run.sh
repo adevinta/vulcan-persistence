@@ -7,7 +7,7 @@ if [ ! -z "$POSTGRES_CA_B64" ]; then
 fi
 
 unset VERSION # unset VERSION to prevent conflicts in db:migrate
-bin/rails db:migrate
+bundle exec rake db:migrate
 
 if [ -f "$1" ]
 then

@@ -1,3 +1,7 @@
+if $*.join().include? "db:migrate"
+  return
+end
+
 #Create the workers that read from the queue and create checks.
 sqs_create_checks_url = ENV['AWS_CREATE_CHECKS_SQS_URL'] || ''
 create_checks_nof_workers = 0

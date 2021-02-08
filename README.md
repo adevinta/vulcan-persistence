@@ -32,6 +32,7 @@ Those are the variables you have to use:
 
 |Variable|Description|Sample|
 |---|---|---|
+|LOG_LEVEL|Rails log level (optional)|DEBUG
 |POSTGRES_(HOST\|PORT\|USER\|PASSWORD\|DB)|Database access|
 |POSTGRES_SSLMODE|One of these (disable,allow,prefer,require,verify-ca,verify-full)|prefer|
 |POSTGRES_CA_B64|A base64 encoded ca certificate||

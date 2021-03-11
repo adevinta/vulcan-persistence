@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class SNSPublishJob < ApplicationJob
   queue_as :default
 

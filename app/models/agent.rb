@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class Agent < ApplicationRecord
   include Filterable
   include AASM

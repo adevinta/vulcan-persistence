@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 module Filterable
   extend ActiveSupport::Concern
 

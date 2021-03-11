@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class ChecksHelper
   def self.create_check(params, scan_id = nil)
     program_id = params.fetch(:program_id) if params.has_key?(:program_id)

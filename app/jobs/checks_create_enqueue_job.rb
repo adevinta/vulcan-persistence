@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class ChecksCreateEnqueueJob < ApplicationJob
   queue_as :default
   def perform(scan_id, scan_start_time, body, queue_now = false)

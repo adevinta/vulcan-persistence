@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 require_relative 'boot'
 
 require "rails"

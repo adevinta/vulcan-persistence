@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 require "#{Rails.root}/lib/sqs_service.rb"
 require "#{Rails.root}/lib/notifications_helper.rb"
 require "#{Rails.root}/lib/checks_helper.rb"

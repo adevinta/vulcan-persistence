@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class JobQueuesHelper
   def self.get_queue_name(jobqueue_id = nil, jobqueue_name = nil, checktype = nil)
     nessus_check_queue = Rails.application.config.nessus_check_queue

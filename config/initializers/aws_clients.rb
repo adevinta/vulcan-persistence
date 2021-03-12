@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 require 'aws-sdk-rails'
 
 region = ENV['REGION'] || ""

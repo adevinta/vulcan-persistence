@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 require 'test_helper'
 
 describe "notifications helper" do

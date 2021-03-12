@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class Check < ApplicationRecord
   @@allowed_trasitions = {
     :CREATED => [:QUEUED, :ASSIGNED, :MALFORMED, :RUNNING, :FAILED, :FINISHED, :ABORTED,:PURGING, :KILLED, :TIMEOUT, :INCONCLUSIVE],

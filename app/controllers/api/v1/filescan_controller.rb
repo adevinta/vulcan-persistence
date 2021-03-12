@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 module Api::V1
     class FilescanController < ApplicationController
       # POST /FileScan

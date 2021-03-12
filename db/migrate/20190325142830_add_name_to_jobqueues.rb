@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class AddNameToJobqueues < ActiveRecord::Migration[5.0]
   def change
     add_column :jobqueues, :name, :string, null: true

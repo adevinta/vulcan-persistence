@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 %w(
   .ruby-version
   .rbenv-vars

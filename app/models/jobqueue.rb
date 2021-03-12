@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class Jobqueue < ApplicationRecord
   include Filterable
 

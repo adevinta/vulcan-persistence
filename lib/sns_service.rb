@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 require 'net/http'
 require 'aws-sdk-rails'
 require 'json'

@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class CreateChecksJob < ActiveJob::Base
   def perform(queue_url)
     poller = Aws::SQS::QueuePoller.new(queue_url)

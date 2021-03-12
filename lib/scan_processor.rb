@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 require 'json/stream'
 
 class ScanProcessor

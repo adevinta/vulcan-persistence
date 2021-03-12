@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 module Api::V1
   class ScansController < ApplicationController
     before_action :set_scan, only: [:show, :destroy, :checks, :stats, :abort]

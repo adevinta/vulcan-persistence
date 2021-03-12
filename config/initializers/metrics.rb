@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 Rails.application.config.metrics = ENV['DOGSTATSD_ENABLED'] || false
 metrics_host = ENV['DOGSTATSD_HOST'] || "localhost"
 metrics_port = ENV['DOGSTATSD_PORT'] || 8125

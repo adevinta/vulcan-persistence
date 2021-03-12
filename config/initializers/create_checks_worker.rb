@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 if $*.join().include? "db:migrate"
   return
 end

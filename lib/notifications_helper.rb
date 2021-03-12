@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class NotificationsHelper
   class << self
     def notify(action, check_id: nil, agent_id: nil, scan_id: nil)

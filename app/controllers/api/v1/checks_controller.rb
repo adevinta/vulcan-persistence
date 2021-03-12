@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 module Api::V1
   class ChecksController < ApplicationController
     before_action :set_check, only: [:show, :update, :destroy, :abort, :kill]

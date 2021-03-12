@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class CreateChecks < ActiveRecord::Migration[5.0]
   enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
   def change

@@ -1,3 +1,5 @@
+# Copyright 2021 Adevinta
+
 class ApplicationController < ActionController::API
   include ActionController::Serialization
   before_action :check_content_type

@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 module Api::V1
   class JobqueuesController < ApplicationController
     before_action :set_jobqueue, only: [:show, :update, :destroy]

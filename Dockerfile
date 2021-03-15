@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 ARG rails_env=production
 FROM ruby:2.4.9-alpine AS pre-builder
 ARG build_without=""

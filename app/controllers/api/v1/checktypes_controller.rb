@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 module Api::V1
   class ChecktypesController < ApplicationController
     before_action :set_checktype, only: [:show, :update, :destroy]

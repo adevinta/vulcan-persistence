@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 require 'test_helper'
 
 class ChecksCreateEnqueueJobTest < ActiveJob::TestCase

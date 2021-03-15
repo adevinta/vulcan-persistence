@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 require 'etc'
 
 workers Etc.nprocessors

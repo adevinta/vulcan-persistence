@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 class HealthchecksController < ApplicationController
   def health
     if ActiveRecord::Base.connection.execute('select 1;')

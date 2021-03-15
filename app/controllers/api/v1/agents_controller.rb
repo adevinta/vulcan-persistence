@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 module Api::V1
   class AgentsController < ApplicationController
     before_action :set_agent, only: [:show, :update, :destroy, :heartbeat, :disconnect, :pause, :resume]

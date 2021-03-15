@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 class FilescanProcessJob < ApplicationJob
   queue_as :default
   @@s3_bucket =  Aws::S3::Resource.new(client: Rails.application.config.s3_client).bucket(Rails.application.config.scans_bucket)

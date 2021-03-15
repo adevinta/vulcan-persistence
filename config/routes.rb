@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 Rails.application.routes.draw do
   scope module: 'api' do
     namespace :v1 do

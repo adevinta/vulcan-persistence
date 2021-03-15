@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 class Checktype < ApplicationRecord
   include Filterable
 

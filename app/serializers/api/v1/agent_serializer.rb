@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 module Api::V1
   class AgentSerializer < ActiveModel::Serializer
     include Rails.application.routes.url_helpers

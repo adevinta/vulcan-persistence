@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 class CreateAgents < ActiveRecord::Migration[5.0]
   enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
   def change

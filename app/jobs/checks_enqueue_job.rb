@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 class ChecksEnqueueJob < ApplicationJob
   queue_as :default
 

@@ -1,4 +1,6 @@
 #!/bin/sh
+
+# Copyright 2019 Adevinta
 cat .env.config | envsubst > .env.production
 
 if [ ! -z "$POSTGRES_CA_B64" ]; then

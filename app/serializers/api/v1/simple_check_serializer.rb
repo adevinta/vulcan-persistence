@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 module Api::V1
   class SimpleCheckSerializer < ActiveModel::Serializer
     attributes :id, :target, :status, :checktype_name

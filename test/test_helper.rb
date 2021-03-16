@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
 

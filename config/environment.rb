@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 # Load the Rails application.
 require_relative 'application'
 

@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 require 'uuid'
 class ScansHelper
   def self.get_metadata(scan)

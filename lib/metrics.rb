@@ -1,3 +1,5 @@
+# Copyright 2020 Adevinta
+
 class Metrics
   def self.count(metric_name, metric_value, metric_tags)
     begin

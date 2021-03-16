@@ -1,3 +1,5 @@
+# Copyright 2019 Adevinta
+
 Rails.application.config.stream_channel = ENV.fetch('STREAM_CHANNEL')
 Rails.application.config.scans_bucket = ENV.fetch('SCANS_BUCKET')
 Rails.application.config.scan_processor_buffer = ENV.fetch('SCAN_PROCESSOR_BUFFER_SIZE_MB')

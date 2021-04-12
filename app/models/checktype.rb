@@ -10,5 +10,4 @@ class Checktype < ApplicationRecord
   scope :checktype, -> (checktype) { where name: checktype }
   scope :enabled, -> (enabled) { where enabled: enabled }
   scope :image, -> (image) { where image: image }
-  scope :queue_name, -> (queue_name) { where queue_name: queue_name }
 end

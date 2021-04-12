@@ -57,7 +57,7 @@ module Api::V1
 
     # Only allow a trusted parameter "white list" through.
     def checktype_params
-      params.require(:checktype).permit(:name, :description, :timeout, :enabled, :options, :image, :queue_name, :assets => [], :required_vars => [])
+      params.require(:checktype).permit(:name, :description, :timeout, :enabled, :options, :image, :assets => [], :required_vars => [])
     end
   end
 end

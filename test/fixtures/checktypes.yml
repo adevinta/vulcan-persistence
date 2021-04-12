@@ -33,5 +33,4 @@ checktype04:
   enabled: true
   image: dockerimage4
   required_vars: ["TLS_REQUIRED_VAR"]
-  queue_name: vulcan-nessus-queue
   created_at: <%= 1.minute.from_now.to_s %>

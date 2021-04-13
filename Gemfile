@@ -38,8 +38,6 @@ gem 'active_model_serializers', '~> 0.10.4'
 gem 'dotenv-rails', '~> 2.2', '>= 2.2.0'
 # DogStatsD
 gem 'dogstatsd-ruby', '~> 4.8', '>= 4.8.1', require: false
-# AASM State machines
-gem 'aasm', '~> 5.0.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -55,15 +53,6 @@ group :development do
   gem 'spring', '~> 2.0.1'
   gem 'spring-watcher-listen', '~> 2.0.1'
 end
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', '~> 1.2.2', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-# For storing the results in S3
-gem 'aws-sdk-rails', '~> 1.0.1'
-
-# json chunk parser
-gem 'json-stream', '~> 0.2.1'
 
 # manage views from migrations
 gem 'scenic', '~> 1.4.1'

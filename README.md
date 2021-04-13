@@ -37,24 +37,6 @@ Those are the variables you have to use:
 |POSTGRES_SSLMODE|One of these (disable,allow,prefer,require,verify-ca,verify-full)|prefer|
 |POSTGRES_CA_B64|A base64 encoded ca certificate||
 |SECRET_KEY_BASE|Security key||
-|STREAM_CHANNEL|Postgres channel|events|
-|REGION|AWS region|eu-west-1|
-|SCANS_BUCKET|S3 bucket for scans|my-vulcan-scan-bucket|
-|SNS_TOPIC_ARN|Sns topic arn|arn:aws:sns:eu-west-1:xxx:yyy|
-|AWS_CREATE_CHECKS_SQS_URL| url of the queue for the workers to async create checks (optional)
-|AWS_CREATE_CHECKS_WORKERS| number of "create checks" workers to init (optional)
-
-
-You can specify custom AWS endpoints for testing/developing purposes for each one of the
- AWS services used in Vulcan Persistence, for example, by using [Minio](https://min.io/) or [LocalStack](https://localstack.cloud/).  
-
-You just need to provide the following env vars:
-
-|Variable|Description|Sample|
-|---|---|---|
-|AWS_SQS_ENDPOINT|Custom AWS SQS endpoint|http://localhost:4100 |
-|AWS_SNS_ENDPOINT|custom AWS SNS endpoint|http://localhost:4100 |
-|AWS_S3_ENDPOINT|custom AWS S3 endpoint|http://localhost:9000 |
 
 ```bash
 docker build . -t vp

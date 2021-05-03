@@ -9,7 +9,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.7', '>= 5.0.7.1'
+gem 'rails', '~> 5.2.4', '>= 5.2.4.5'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.13'
 # Added Postgres support
@@ -18,7 +18,7 @@ gem 'pg', '~> 0.18.4'
 gem 'ar-uuid', '~> 0.1.2'
 gem 'uuid', '~> 2.3', '>= 2.3.8'
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 3.12', '>= 3.12.6'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
@@ -56,3 +56,5 @@ end
 
 # manage views from migrations
 gem 'scenic', '~> 1.4.1'
+
+gem "nokogiri", ">= 1.11.0"

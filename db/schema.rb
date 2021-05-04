@@ -12,84 +12,83 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201028102229) do
+ActiveRecord::Schema.define(version: 2021_04_12_150122) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
   enable_extension "pgcrypto"
+  enable_extension "plpgsql"
 
   create_table "agents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid     "jobqueue_id"
-    t.string   "status",       default: "NEW", null: false
-    t.string   "version",      default: "0.1", null: false
-    t.boolean  "enabled",      default: true,  null: false
+    t.uuid "jobqueue_id"
+    t.string "status", default: "NEW", null: false
+    t.string "version", default: "0.1", null: false
+    t.boolean "enabled", default: true, null: false
     t.datetime "heartbeat_at"
     t.datetime "deleted_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.index ["jobqueue_id"], name: "index_agents_on_jobqueue_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["jobqueue_id"], name: "index_agents_on_jobqueue_id"
   end
 
   create_table "checks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid     "agent_id"
-    t.uuid     "checktype_id"
-    t.string   "status",        default: "CREATED", null: false
-    t.string   "target",                            null: false
-    t.text     "options"
-    t.string   "webhook"
-    t.float    "score",         default: 0.0
-    t.float    "progress",      default: 0.0
-    t.text     "raw"
-    t.text     "report"
+    t.uuid "agent_id"
+    t.uuid "checktype_id"
+    t.string "status", default: "CREATED", null: false
+    t.string "target", null: false
+    t.text "options"
+    t.string "webhook"
+    t.float "score", default: 0.0
+    t.float "progress", default: 0.0
+    t.text "raw"
+    t.text "report"
     t.datetime "deleted_at"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.uuid     "scan_id"
-    t.string   "queue_name"
-    t.string   "tag"
-    t.text     "required_vars", default: [],                     array: true
-    t.string   "assettype"
-    t.index ["agent_id"], name: "index_checks_on_agent_id", using: :btree
-    t.index ["checktype_id"], name: "index_checks_on_checktype_id", using: :btree
-    t.index ["scan_id"], name: "index_checks_on_scan_id", using: :btree
-    t.index ["status"], name: "index_checks_on_status", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "scan_id"
+    t.string "queue_name"
+    t.string "tag"
+    t.text "required_vars", default: [], array: true
+    t.string "assettype"
+    t.index ["agent_id"], name: "index_checks_on_agent_id"
+    t.index ["checktype_id"], name: "index_checks_on_checktype_id"
+    t.index ["scan_id"], name: "index_checks_on_scan_id"
+    t.index ["status"], name: "index_checks_on_status"
   end
 
   create_table "checktypes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string   "name",                         null: false
-    t.text     "description"
-    t.integer  "timeout",       default: 600,  null: false
-    t.boolean  "enabled",       default: true, null: false
-    t.text     "options"
-    t.text     "image",                        null: false
+    t.string "name", null: false
+    t.text "description"
+    t.integer "timeout", default: 600, null: false
+    t.boolean "enabled", default: true, null: false
+    t.text "options"
+    t.text "image", null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.text     "assets",        default: [],                array: true
-    t.string   "queue_name"
-    t.text     "required_vars", default: [],                array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "assets", default: [], array: true
+    t.text "required_vars", default: [], array: true
   end
 
   create_table "jobqueues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string   "arn",                         null: false
-    t.text     "description"
+    t.string "arn", null: false
+    t.text "description"
     t.datetime "deleted_at"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.boolean  "default",     default: false, null: false
-    t.string   "name",                        null: false
-    t.index ["name"], name: "index_jobqueues_on_name", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "default", default: false, null: false
+    t.string "name", null: false
+    t.index ["name"], name: "index_jobqueues_on_name"
   end
 
   create_table "scans", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer  "size",       default: 0,     null: false
+    t.integer "size", default: 0, null: false
     t.datetime "deleted_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.boolean  "aborted",    default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "aborted", default: false, null: false
     t.datetime "aborted_at"
-    t.string   "tag"
-    t.string   "program"
+    t.string "tag"
+    t.string "program"
   end
 
   add_foreign_key "agents", "jobqueues"

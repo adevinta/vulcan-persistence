@@ -172,6 +172,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  actionpack (>= 5.2.4.6)
   active_model_serializers (~> 0.10.4)
   ar-uuid (~> 0.1.2)
   byebug (~> 9.0.6)
@@ -182,7 +183,7 @@ DEPENDENCIES
   nokogiri (>= 1.11.0)
   pg (~> 0.18.4)
   puma (~> 3.12, >= 3.12.6)
-  rails (~> 5.2.4, >= 5.2.4.5)
+  rails (~> 5.2.4, >= 5.2.4.6)
   scenic (~> 1.4.1)
   simplecov (~> 0.17.0)
   spring (~> 2.0.1)

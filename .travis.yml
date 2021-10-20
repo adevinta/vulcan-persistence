@@ -4,7 +4,8 @@ rvm:
 services:
   - docker
 script:
-  - ./script/testdb
+  - docker run --name postgres -p 5432:5432 -e POSTGRES_USER=vulcan -e POSTGRES_PASSWORD=vulcan --rm -d postgres:13.3-alpine
   - ./script/test
+  - docker rm -f postgres
 after_success:
   - bash -c 'source <(curl -s https://raw.githubusercontent.com/adevinta/vulcan-cicd/master/docker.sh)'

@@ -2,7 +2,7 @@
 
 set -e
 
-docker run --name postgres -p 5432:5432 -e POSTGRES_USER=vulcan -e POSTGRES_PASSWORD=vulcan --rm -d postgres
+docker run --name postgres -p 5432:5432 -e POSTGRES_USER=vulcan -e POSTGRES_PASSWORD=vulcan --rm -d postgres:13.3-alpine
 
 sleep 5
 

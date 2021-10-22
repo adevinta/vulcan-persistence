@@ -2,13 +2,9 @@ language: ruby
 rvm:
   - 2.5.9
 services:
-  - postgresql
-addons:
-  postgresql: "9.6"
-before_script:
-  - psql -c "CREATE USER vulcan WITH PASSWORD 'vulcan';" -U postgres
-  - psql -c "ALTER USER vulcan WITH SUPERUSER;" -U postgres
+  - docker
 script:
+  - ./script/start-pg
   - ./script/test
 after_success:
   - bash -c 'source <(curl -s https://raw.githubusercontent.com/adevinta/vulcan-cicd/master/docker.sh)'

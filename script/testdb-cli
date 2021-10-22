@@ -2,4 +2,4 @@
 
 set -e
 
-docker run -it --rm --env PGPASSWORD=vulcan --link postgres:postgres postgres psql -h postgres -U vulcan vulcan-dev
+docker run -it --rm --env PGPASSWORD=vulcan --link postgres:postgres postgres:13.3-alpine psql -h postgres -U vulcan vulcan-dev

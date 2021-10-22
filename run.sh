@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Copyright 2019 Adevinta
-cat .env.config | envsubst > .env.production
+envsubst < .env.config > .env.production
 
 if [ -n "$POSTGRES_CA_B64" ]; then
   mkdir -p /root/.postgresql
@@ -17,4 +17,4 @@ then
   PGPASSWORD=$POSTGRES_PASSWORD PGSSLMODE=$POSTGRES_SSLMODE psql -h "$POSTGRES_HOST" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -1 -f "$1"
 fi
 
-bundle exec puma -C config/puma.rb
+exec bundle exec puma -C config/puma.rb

@@ -1,9 +1,10 @@
 # Copyright 2019 Adevinta
 
 class CreateChecktypes < ActiveRecord::Migration[5.0]
-  enable_extension 'pgcrypto' unless extension_enabled?('pgcrypto')
+  enable_extension "pgcrypto" unless extension_enabled?("pgcrypto")
+
   def change
-    create_table :checktypes, id: :uuid, default: 'gen_random_uuid()' do |t|
+    create_table :checktypes, id: :uuid, default: "gen_random_uuid()" do |t|
       t.string :name, null: false
       t.text :description
       t.integer :timeout, null: false, default: 600

@@ -1,19 +1,16 @@
-# Copyright 2019 Adevinta
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_150122) do
-
+ActiveRecord::Schema[7.0].define(version: 2021_04_12_150122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -23,10 +20,10 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
     t.string "status", default: "NEW", null: false
     t.string "version", default: "0.1", null: false
     t.boolean "enabled", default: true, null: false
-    t.datetime "heartbeat_at"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "heartbeat_at", precision: nil
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["jobqueue_id"], name: "index_agents_on_jobqueue_id"
   end
 
@@ -41,9 +38,9 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
     t.float "progress", default: 0.0
     t.text "raw"
     t.text "report"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.uuid "scan_id"
     t.string "queue_name"
     t.string "tag"
@@ -62,9 +59,9 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
     t.boolean "enabled", default: true, null: false
     t.text "options"
     t.text "image", null: false
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "assets", default: [], array: true
     t.text "required_vars", default: [], array: true
   end
@@ -72,9 +69,9 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
   create_table "jobqueues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "arn", null: false
     t.text "description"
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "default", default: false, null: false
     t.string "name", null: false
     t.index ["name"], name: "index_jobqueues_on_name"
@@ -82,11 +79,11 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
 
   create_table "scans", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.integer "size", default: 0, null: false
-    t.datetime "deleted_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "deleted_at", precision: nil
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.boolean "aborted", default: false, null: false
-    t.datetime "aborted_at"
+    t.datetime "aborted_at", precision: nil
     t.string "tag"
     t.string "program"
   end
@@ -96,7 +93,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
   add_foreign_key "checks", "checktypes"
   add_foreign_key "checks", "scans"
 
-  create_view "assettypes",  sql_definition: <<-SQL
+  create_view "assettypes", sql_definition: <<-SQL
       SELECT tmp.asset AS assettype,
       array_agg(tmp.name) AS name
      FROM ( SELECT unnest((t.assets || (ARRAY[NULL::text])[1:((array_upper(t.assets, 1) IS NULL))::integer])) AS asset,
@@ -117,5 +114,4 @@ ActiveRecord::Schema.define(version: 2021_04_12_150122) do
                     WHERE ((c.created_at > t.created_at) AND ((t.name)::text = (c.name)::text)))))) tmp
     GROUP BY tmp.asset;
   SQL
-
 end

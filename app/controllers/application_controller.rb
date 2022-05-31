@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   private
 
   def check_content_type
-    if request.content_length > 0 && request.content_type != "application/json" && request.content_type != "multipart/form-data"
+    if request.content_length > 0 && request.media_type != "application/json" && request.media_type != "multipart/form-data"
       Rails.logger.error "content-type error in request #{request.inspect}"
       render :json =>
       { :error => "Unsupported Media Type"},

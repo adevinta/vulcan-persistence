@@ -1,18 +1,20 @@
 version: 2
 updates:
-- package-ecosystem: bundler
+- package-ecosystem: "bundler"
   directory: "/"
   schedule:
-    interval: daily
-  open-pull-requests-limit: 10
-  allow:
-  - dependency-name: "*adevinta*"
-  ignore:
-  - dependency-name: nokogiri
-    versions:
-    - 1.11.1
-    - 1.11.2
+    interval: "daily"
+  labels:
+    - "dependencies"
 - package-ecosystem: "docker"
   directory: "/"
   schedule:
     interval: "weekly"
+  labels:
+    - "dependencies"
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+  labels:
+    - "dependencies"

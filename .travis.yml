@@ -1,4 +1,8 @@
 language: ruby
+env:
+  global:
+    # Removed linux/arm64 because it takes too long to build
+    - INPUT_PLATFORM=linux/amd64  #,linux/arm64
 rvm:
   - 3.3.0
 services:
@@ -10,4 +14,4 @@ script:
   - ./script/start-pg
   - ./script/test
 after_success:
-  - bash -c 'source <(curl -s https://raw.githubusercontent.com/adevinta/vulcan-cicd/master/docker.sh)'
+  - bash -c 'source <(curl -s https://raw.githubusercontent.com/adevinta/vulcan-cicd/master/buildx.sh)'

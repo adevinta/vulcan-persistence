@@ -75,6 +75,8 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ar-uuid (0.2.3)
       activerecord
+    base64 (0.2.0)
+    bigdecimal (3.1.5)
     builder (3.2.4)
     byebug (9.0.6)
     case_transform (0.2)
@@ -92,6 +94,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    drb (2.2.0)
+      ruby2_keywords
     erubi (1.12.0)
     ffi (1.15.5)
     globalid (1.1.0)
@@ -117,7 +121,9 @@ GEM
     marcel (1.0.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.5)
     minitest (5.17.0)
+    mutex_m (0.2.0)
     net-imap (0.3.6)
       date
       net-protocol
@@ -127,14 +133,23 @@ GEM
       timeout
     net-smtp (0.3.3)
       net-protocol
-    nio4r (2.5.8)
-    nokogiri (1.15.3-x86_64-linux)
+    nio4r (2.7.0)
+    nokogiri (1.16.0)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.16.0-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.0-arm-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.0-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
     pg (1.4.5)
     public_suffix (5.0.1)
-    puma (5.6.5)
+    puma (5.6.8)
       nio4r (~> 2.0)
-    racc (1.7.1)
+    racc (1.7.3)
     rack (2.2.6.4)
     rack-test (2.0.2)
       rack (>= 1.3)
@@ -169,6 +184,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rexml (3.2.5)
+    ruby2_keywords (0.0.5)
     scenic (1.6.0)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
@@ -196,16 +212,25 @@ GEM
     zeitwerk (2.6.7)
 
 PLATFORMS
+  aarch64-linux-musl
+  arm64-darwin
+  arm64-linux
   ruby
+  x86_64-linux
+  x86_64-linux-musl
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.4)
   ar-uuid (~> 0.2.2)
+  base64 (~> 0.2.0)
+  bigdecimal (~> 3.1)
   byebug (~> 9.0.6)
   codecov (~> 0.6.0)
   dogstatsd-ruby (~> 4.8, >= 4.8.1)
   dotenv-rails (~> 2.2, >= 2.2.0)
+  drb (~> 2.2)
   listen (~> 3.0.8)
+  mutex_m (~> 0.2.0)
   nokogiri (>= 1.13.10)
   pg (~> 1.3)
   puma (~> 5.6)
@@ -218,4 +243,4 @@ DEPENDENCIES
   webmock (~> 2.3.2)
 
 BUNDLED WITH
-   2.3.26
+   2.5.3

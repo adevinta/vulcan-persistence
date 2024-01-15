@@ -45,3 +45,11 @@ end
 gem 'scenic', '~> 1.6.0'
 
 gem "nokogiri", ">= 1.13.10"
+
+gem "base64", "~> 0.2.0"
+
+gem "bigdecimal", "~> 3.1"
+
+gem "mutex_m", "~> 0.2.0"
+
+gem "drb", "~> 2.2"

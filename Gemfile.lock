@@ -81,8 +81,6 @@ GEM
     byebug (9.0.6)
     case_transform (0.2)
       activesupport
-    codecov (0.6.0)
-      simplecov (>= 0.15, < 0.22)
     concurrent-ruby (1.2.0)
     crack (0.4.5)
       rexml
@@ -225,7 +223,6 @@ DEPENDENCIES
   base64 (~> 0.2.0)
   bigdecimal (~> 3.1)
   byebug (~> 9.0.6)
-  codecov (~> 0.6.0)
   dogstatsd-ruby (~> 4.8, >= 4.8.1)
   dotenv-rails (~> 2.2, >= 2.2.0)
   drb (~> 2.2)

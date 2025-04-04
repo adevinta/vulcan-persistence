@@ -1,10 +1,9 @@
 # Copyright 2019 Adevinta
 
-ARG rails_env=production
 FROM ruby:3.3.0-alpine AS pre-builder
-ARG build_without=""
+ARG bundle_without="" rails_env=production
 ENV SECRET_KEY_BASE=dumb
-RUN apk add --update --no-cache \
+RUN apk add --no-cache \
     openssl \
     tar \
     build-base \
@@ -22,8 +21,8 @@ RUN bundle install -j4 --retry 3 \
     && find /gems/ -name "*.o" -delete
 
 FROM ruby:3.3.0-alpine
-ARG rails_env=production
-RUN apk add --update --no-cache \
+ARG build_without="" rails_env=production
+RUN apk add --no-cache \
     openssl \
     tzdata \
     postgresql-dev \
@@ -32,15 +31,10 @@ RUN apk add --update --no-cache \
     gettext \
     ca-certificates
 
-ARG BUILD_RFC3339="1970-01-01T00:00:00Z"
-ARG COMMIT="local"
-
-ENV BUILD_RFC3339 "$BUILD_RFC3339"
-ENV COMMIT "$COMMIT"
-
 COPY --from=pre-builder /gems/ /gems/
+ARG bundle_without rails_env
 ENV BUNDLE_PATH="/gems" BUNDLE_JOBS=2 RAILS_ENV=${rails_env} BUNDLE_WITHOUT=${bundle_without}
-ENV RAILS_LOG_TO_STDOUT true
+ENV RAILS_LOG_TO_STDOUT=true
 
 WORKDIR /app
 COPY . .

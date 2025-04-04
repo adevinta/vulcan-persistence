@@ -32,7 +32,6 @@ group :development, :test do
   gem 'byebug', '~> 9.0.6', platform: :mri
   gem 'webmock', '~> 2.3.2', platform: :mri
   gem 'simplecov', '~> 0.17.0'
-  gem 'codecov', '~> 0.6.0'
 end
 
 group :development do

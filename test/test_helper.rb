@@ -3,11 +3,6 @@
 ENV['RAILS_ENV'] ||= 'test'
 require 'simplecov'
 
-if ENV['CI'] == 'true'
-  require 'codecov'
-  SimpleCov.formatter = SimpleCov::Formatter::Codecov
-end
-
 SimpleCov.start
 
 require File.expand_path('../../config/environment', __FILE__)

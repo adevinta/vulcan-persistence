@@ -29,7 +29,8 @@ RUN apk add --no-cache \
     sqlite-dev \
     postgresql-client \
     gettext \
-    ca-certificates
+    ca-certificates \
+    gcompat
 
 COPY --from=pre-builder /gems/ /gems/
 ARG bundle_without rails_env

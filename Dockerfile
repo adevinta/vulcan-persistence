@@ -1,6 +1,6 @@
 # Copyright 2019 Adevinta
 
-FROM ruby:3.3.0-alpine AS pre-builder
+FROM ruby:3.4.4-alpine AS pre-builder
 ARG bundle_without="" rails_env=production
 ENV SECRET_KEY_BASE=dumb
 RUN apk add --no-cache \
@@ -20,7 +20,7 @@ RUN bundle install -j4 --retry 3 \
     && find /gems/ -name "*.c" -delete \
     && find /gems/ -name "*.o" -delete
 
-FROM ruby:3.3.0-alpine
+FROM ruby:3.4.4-alpine
 ARG build_without="" rails_env=production
 RUN apk add --no-cache \
     openssl \
